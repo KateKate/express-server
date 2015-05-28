@@ -4,10 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors');
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var validate = require('./routes/validate');
 
 var app = express();
 
@@ -22,10 +23,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 app.use('/', routes);
 app.use('/users', users);
 
+// Validate unique START
 app.get('/registrations/validate/:field?/:value?', function (req,res) {
   var field = req.params.field,
       value = req.params.value,
@@ -39,9 +42,14 @@ app.get('/registrations/validate/:field?/:value?', function (req,res) {
   var key = field + '_exists';
   var object = {};
   object[key] = result;
-  res.setHeader("Access-Control-Allow-Origin", "*");
   res.json(object);
   res.send();
+});
+// Validate unique END
+
+app.post('/registrations', function (req,res) {
+  var username = req.body.username;
+  res.send('Username:'+ username);
 });
 
 // catch 404 and forward to error handler
