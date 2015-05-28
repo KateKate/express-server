@@ -1,0 +1,6 @@
+{
+  "name": "regisbackend",
+  "root": "public",
+  "clean_urls": true,
+  "error_page": "error.html"
+}
