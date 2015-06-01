@@ -48,8 +48,31 @@ app.get('/registrations/validate/:field?/:value?', function (req,res) {
 // Validate unique END
 
 app.post('/registrations', function (req,res) {
-  var username = req.body.username;
-  res.send('Username:'+ username);
+  var username = req.body.username,
+    email = req.body.email,
+    valid = true,
+    usernameMessage = '',
+    emailMessage = '',
+    generalError = '';
+  if (username == 'kate' || username == 'kate1') {
+    valid = false;
+    usernameMessage = 'Please enter unique value';
+  }
+  if (email == 'kate@kate.com' || email == 'kate1@kate1.com') {
+    valid = false;
+    emailMessage = 'Please enter unique value';
+  }
+  if (username == 'general') {
+    valid = false;
+    generalError = 'Some problems with general username';
+  }
+  var response = {
+    'valid': valid,
+    'username': usernameMessage,
+    'email': emailMessage,
+    'general_error': generalError,
+  }
+  res.json(response);
 });
 
 // catch 404 and forward to error handler
