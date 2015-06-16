@@ -29,9 +29,9 @@ app.use('/', routes);
 app.use('/users', users);
 
 // Validate unique START
-app.get('/registrations/validate/:field?/:value?', function (req,res) {
-  var field = req.params.field,
-      value = req.params.value,
+app.get('/registrations/validate', function (req,res) {
+  var field = req.query.field,
+      value = req.query.value,
       result = false;
   if (field=='username' && value=='kate') {
     result = true;
@@ -45,7 +45,6 @@ app.get('/registrations/validate/:field?/:value?', function (req,res) {
   res.json(object);
   res.send();
 });
-// Validate unique END
 
 app.post('/registrations', function (req,res) {
   var username = req.body.username,
