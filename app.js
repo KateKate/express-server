@@ -74,6 +74,63 @@ app.post('/registrations', function (req,res) {
   res.json(response);
 });
 
+app.post('/password/reset', function (req,res) {
+  var username = req.body.user.password_reset.username,
+    email = req.body.user.password_reset.email,
+    result = true, 
+    baseText, usernameText, emailText;
+  if (username == 'invalid') {
+    result = false;
+    usernameText = 'Invalid username';
+  }
+  if (email == 'invalid@gmail.com') {
+    result = false;
+    emailText = 'Invalid email';
+  }
+  if (username == 'connection') {
+    result = false;
+    baseText = 'Server error';
+  }
+  var response = {
+    password_reset: result,
+    message: {
+      base: baseText,
+      username: usernameText,
+      email: emailText,
+    }
+  }
+  res.json(response);
+});
+
+app.post('/authentication', function (req,res) {
+  var username = req.body.user.username,
+    password = req.body.user.password,
+    result = true, 
+    baseText, usernameText, passwordText;
+  if (username == 'invalid') {
+    result = false;
+    usernameText = 'Invalid username';
+  }
+  if (password == 'invalid') {
+    result = false;
+    passwordText = 'Invalid password';
+  }
+  if (username == 'connection') {
+    result = false;
+    baseText = 'Invalid data or some error';
+  }
+  var response = {
+    authorized: result,
+    auth_token: 'token',
+    message: {
+      base: baseText,
+      login: usernameText,
+      password: passwordText,
+    }
+  }
+  res.json(response);
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
