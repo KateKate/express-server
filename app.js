@@ -102,7 +102,7 @@ app.post('/password/reset', function (req,res) {
   res.json(response);
 });
 
-app.post('/authentication', function (req,res) {
+app.post('/users/authentications', function (req,res) {
   var username = req.body.user.username,
     password = req.body.user.password,
     result = true, 
@@ -120,8 +120,8 @@ app.post('/authentication', function (req,res) {
     baseText = 'Invalid data or some error';
   }
   var response = {
-    authorized: result,
-    auth_token: 'token',
+    authenticated: result,
+    auth_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjoxMDk2NiwidXNlcm5hbWUiOiJlbGVjczEifQ.KCJybHrGGsXeZRdwoo5ADnafr-XHmB8SUiS6oPDVIps',
     message: {
       base: baseText,
       login: usernameText,
