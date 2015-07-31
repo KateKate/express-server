@@ -128,6 +128,7 @@ app.post('/users/authentications', function (req,res) {
       password: passwordText,
     }
   }
+  /*res.status(422).json(response);*/
   res.json(response);
 });
 
